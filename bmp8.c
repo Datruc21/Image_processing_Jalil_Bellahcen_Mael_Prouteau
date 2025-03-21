@@ -15,15 +15,9 @@ t_bmp8 * bmp8_loadImage(const char* filename){
 
     t_bmp8 * new_image = (t_bmp8 *) malloc(sizeof(t_bmp8));
     if (new_image == NULL ) return NULL;
-    *header = malloc(sizeof(unsigned char)*54);
-    if (header == NULL)
-        printf("Error with memory location");
 
-    unsigned char* colorTable = (unsigned char*)malloc(sizeof(unsigned char)*1024);
-    unsigned char* data = (unsigned char*)malloc(sizeof(unsigned char));
-
-    //find those in the header file
-    }
+    return NULL;
+}
 
 void bmp8_saveImage(const char * filename, t_bmp8 * img){
 
