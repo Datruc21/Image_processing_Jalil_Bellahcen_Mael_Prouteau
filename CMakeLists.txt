@@ -3,4 +3,6 @@ project(Image_processing_Jalil_Bellahcen_Mael_Prouteau C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(Image_processing_Jalil_Bellahcen_Mael_Prouteau main.c)
+add_executable(Image_processing_Jalil_Bellahcen_Mael_Prouteau main.c
+        bmp8.c
+        bmp8.h)
