@@ -21,6 +21,7 @@ t_bmp8 * bmp8_loadImage(const char* filename) {
     unsigned int height = *(unsigned int *)&header[22];
     unsigned int colorDepth = *(unsigned int *)&header[28];
     unsigned int dataSize = *(unsigned int *)&header[34];
+
     for (int i = 0; i<54;i++) {
         *(new_image ->  header + i) = header[i];
     }
@@ -45,8 +46,9 @@ t_bmp8 * bmp8_loadImage(const char* filename) {
 void bmp8_saveImage(const char * filename, t_bmp8 * img){
     FILE *f = fopen(filename, "wb");
     if (f == NULL){printf("Error while opening the file!");return;}
-
-
+    fwrite(img -> header,1,54,f);
+    fwrite(img -> data,1,img -> dataSize,f);
+    fclose(f);
 }
 
 void bmp8_free(t_bmp8 * img){
