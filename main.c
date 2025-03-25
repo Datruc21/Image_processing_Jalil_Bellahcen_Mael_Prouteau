@@ -1,6 +1,9 @@
 #include <stdio.h>
+#include "bmp8.h"
 
 int main(void) {
-    printf("Hello!\n");
+    t_bmp8 * new_image = bmp8_loadImage("lena_gray.bmp");
+    bmp8_printInfo(new_image);
+    bmp8_free(new_image);
     return 0;
 }
