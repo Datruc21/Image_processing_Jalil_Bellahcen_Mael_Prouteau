@@ -52,11 +52,14 @@ void bmp8_saveImage(const char * filename, t_bmp8 * img){
 }
 
 void bmp8_free(t_bmp8 * img){
-
-
+    free(img -> data);
+    free(img);
 }
 
 void bmp8_printInfo(t_bmp8 * img){
-
-
+    printf("Image info :\n");
+    printf("\tWidth:%u\n",img -> width);
+    printf("\tHeight:%u\n",img -> height);
+    printf("\tColor Depth:%u\n",img -> colorDepth);
+    printf("\tData size:%u\n",img -> dataSize);
 }
