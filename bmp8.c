@@ -34,6 +34,12 @@ t_bmp8 * bmp8_loadImage(const char* filename) {
         fclose(f);
         return NULL;
     }
+    if (fread(new_image->colorTable, 1, 1024, f) != 1024) {
+        printf("Error reading BMP color table!\n");
+        free(new_image);
+        fclose(f);
+        return NULL;
+    }
     new_image -> data = (unsigned char *)malloc(new_image -> dataSize);
     if (new_image -> data == NULL) {printf("Problems in memory allocation\n");free(new_image -> data);free(new_image);fclose(f);return NULL;}
     fread(new_image -> data,1,new_image -> dataSize,f);
@@ -42,10 +48,15 @@ t_bmp8 * bmp8_loadImage(const char* filename) {
 }
 
 
+
+
 void bmp8_saveImage(const char * filename, t_bmp8 * img){
     FILE *f = fopen(filename, "wb");
-    if (f == NULL){printf("Error while opening the file!\n");return;}
+    if (f == NULL){
+        printf("Error while writing the file!\n");
+        return;}
     fwrite(img -> header,1,54,f);
+    fwrite(img->colorTable, 1, 1024, f);
     fwrite(img -> data,1,img -> dataSize,f);
     fclose(f);
 }
@@ -63,4 +74,30 @@ void bmp8_printInfo(t_bmp8 * img){
         printf("\tColor Depth:%u\n",img -> colorDepth);
         printf("\tData size:%u\n",img -> dataSize);
     }
+}
+
+void bmp8_negative(t_bmp8 * img){
+    for (int i = 0;i<img -> dataSize; i++){
+        img -> data[i] = 255 - img -> data[i];
+    }
+}
+void bmp8_brightness(t_bmp8 * img, int value){
+    for (int i = 0;i<img -> dataSize; i++){
+        img -> data[i] += value;
+        if (img -> data[i]<0)
+            img -> data[i] = 0;
+        if (img -> data[i]>255)
+            img -> data[i] = 255;
+    }
+}
+
+void bmp8_threshold(t_bmp8 * img, int threshold){
+    for (int i = 0; i < img->dataSize; i++) {
+        img->data[i] = (img->data[i] < threshold) ? 0 : 255;
+    }
+}
+
+
+void bmp8_applyFilter(t_bmp8 * img, float ** kernel, int kernelSize){
+
 }
