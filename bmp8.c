@@ -83,10 +83,9 @@ void bmp8_negative(t_bmp8 * img){
 }
 void bmp8_brightness(t_bmp8 * img, int value){
     for (int i = 0;i<img -> dataSize; i++){
-        img -> data[i] += value;
-        if (img -> data[i]<0)
+        if (img -> data[i] + value <0)
             img -> data[i] = 0;
-        if (img -> data[i]>255)
+        else if (img -> data[i] + value >255)
             img -> data[i] = 255;
     }
 }
