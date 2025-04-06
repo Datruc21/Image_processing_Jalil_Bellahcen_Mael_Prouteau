@@ -34,6 +34,12 @@ t_bmp8 * bmp8_loadImage(const char* filename) {
         fclose(f);
         return NULL;
     }
+    if (fread(new_image->colorTable, 1, 1024, f) != 1024) {
+        printf("Error reading BMP color table!\n");
+        free(new_image);
+        fclose(f);
+        return NULL;
+    }
     new_image -> data = (unsigned char *)malloc(new_image -> dataSize);
     if (new_image -> data == NULL) {printf("Problems in memory allocation\n");free(new_image -> data);free(new_image);fclose(f);return NULL;}
     fread(new_image -> data,1,new_image -> dataSize,f);
@@ -42,10 +48,15 @@ t_bmp8 * bmp8_loadImage(const char* filename) {
 }
 
 
+
+
 void bmp8_saveImage(const char * filename, t_bmp8 * img){
     FILE *f = fopen(filename, "wb");
-    if (f == NULL){printf("Error while opening the file!\n");return;}
+    if (f == NULL){
+        printf("Error while writing the file!\n");
+        return;}
     fwrite(img -> header,1,54,f);
+    fwrite(img->colorTable, 1, 1024, f);
     fwrite(img -> data,1,img -> dataSize,f);
     fclose(f);
 }
@@ -64,3 +75,55 @@ void bmp8_printInfo(t_bmp8 * img){
         printf("\tData size:%u\n",img -> dataSize);
     }
 }
+
+void bmp8_negative(t_bmp8 * img){
+    for (int i = 0;i<img -> dataSize; i++){
+        img -> data[i] = 255 - img -> data[i];
+    }
+}
+void bmp8_brightness(t_bmp8 * img, int value){
+    for (int i = 0;i<img -> dataSize; i++){
+        if (img -> data[i] + value <0)
+            img -> data[i] = 0;
+        else if (img -> data[i] + value >255)
+            img -> data[i] = 255;
+    }
+}
+
+void bmp8_threshold(t_bmp8 * img, int threshold){
+    for (int i = 0; i < img->dataSize; i++) {
+        img->data[i] = (img->data[i] < threshold) ? 0 : 255;
+    }
+}
+int **buildMatrix(int *array, int n) {
+    // Allouer la mémoire pour un tableau de n pointeurs (lignes)
+    int **matrix = (int **)malloc(n * sizeof(int *));
+
+    // Allouer de la mémoire pour chaque ligne de la matrice
+    for (int i = 0; i < n; i++) {
+        matrix[i] = (int *)malloc(n * sizeof(int));
+    }
+    // Remplir la matrice avec les valeurs du tableau 1D
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            matrix[i][j] = array[i * n + j];  // Mappage tableau 1D -> matrice 2D
+        }
+    }
+
+    return matrix;
+}
+
+
+void bmp8_applyFilter(t_bmp8 * img, float ** kernel, int kernelSize){
+    int neighbours = (kernelSize * kernelSize) / 2; //Interval of required neighbour, otherwise we don't do the transformation
+    int center = kernelSize / 2;
+
+
+
+
+
+    }
+
+
+    }
+
