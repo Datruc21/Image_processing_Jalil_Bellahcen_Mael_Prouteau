@@ -116,28 +116,34 @@ float** buildMatrix(unsigned char* array,int m, int n) {
 
 void bmp8_applyFilter(t_bmp8 * img, float ** kernel, int kernelSize) {
     int center = kernelSize/2;
-    float** M = buildMatrix(img -> data, img -> height, img -> width);
-    for (int i = 1; i < img -> width - 2; i++) {
-        for (int j = 1; j < img -> height - 2; j++) {
-            float sum = M[i][j]*kernel[center][center];
+    float** M1 = buildMatrix(img -> data, img -> height, img -> width);
+    float** M2 = buildMatrix(img -> data, img -> height, img -> width);
+
+
+    for (int i = 1; i < img -> height - 1; i++) {
+        for (int j = 1; j < img -> width - 1; j++) {
+            float sum = 0;
             for (int k = -center; k <= center; k++) {
                 for (int l = -center; l <= center; l++) {
-                    sum += M[i + k][j + l] * kernel[center + k][center + l];  // Accès aux voisins
+                    sum += M2[i + k][j + l] * kernel[center - k][center - l];  // Accès aux voisins
                 }
             }
-            printf("%.2f     %.2f\n",M[i][j],sum);
-            M[i][j] = sum;
-            sum = 0;
-
+            if (sum < 0)
+                sum = 0;
+            if (sum > 255)
+                sum = 255;
+            M1[i][j] = sum;
         }
     }
     for (int i = 0;  i < img -> height;i++){
         for (int j = 0; j < img -> width; j++ ) {
-            img -> data[i * img -> width + j] = M[i][j];
+            img -> data[i * img -> width + j] = (unsigned char)M1[i][j];
         }
-        free(M[i]);
+        free(M1[i]);
+        free(M2[i]);
     }
-    free(M);
+    free(M1);
+    free(M2);
 }
 
 
