@@ -95,35 +95,50 @@ void bmp8_threshold(t_bmp8 * img, int threshold){
         img->data[i] = (img->data[i] < threshold) ? 0 : 255;
     }
 }
-int **buildMatrix(int *array, int n) {
+
+float** buildMatrix(unsigned char* array,int m, int n) {
     // Allouer la mémoire pour un tableau de n pointeurs (lignes)
-    int **matrix = (int **)malloc(n * sizeof(int *));
+    float **matrix = (float **)malloc(n * sizeof(float *));
 
     // Allouer de la mémoire pour chaque ligne de la matrice
-    for (int i = 0; i < n; i++) {
-        matrix[i] = (int *)malloc(n * sizeof(int));
+    for (int i = 0; i < m; i++) {
+        matrix[i] = (float *)malloc(n * sizeof(float));
     }
     // Remplir la matrice avec les valeurs du tableau 1D
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < m; i++) {
         for (int j = 0; j < n; j++) {
             matrix[i][j] = array[i * n + j];  // Mappage tableau 1D -> matrice 2D
         }
     }
-
     return matrix;
 }
 
 
-void bmp8_applyFilter(t_bmp8 * img, float ** kernel, int kernelSize){
-    int neighbours = (kernelSize * kernelSize) / 2; //Interval of required neighbour, otherwise we don't do the transformation
-    int center = kernelSize / 2;
+void bmp8_applyFilter(t_bmp8 * img, float ** kernel, int kernelSize) {
+    int center = kernelSize/2;
+    float** M = buildMatrix(img -> data, img -> height, img -> width);
+    for (int i = 1; i < img -> width - 2; i++) {
+        for (int j = 1; j < img -> height - 2; j++) {
+            float sum = M[i][j]*kernel[center][center];
+            for (int k = -center; k <= center; k++) {
+                for (int l = -center; l <= center; l++) {
+                    sum += M[i + k][j + l] * kernel[center + k][center + l];  // Accès aux voisins
+                }
+            }
+            printf("%.2f     %.2f\n",M[i][j],sum);
+            M[i][j] = sum;
+            sum = 0;
 
-
-
-
-
+        }
     }
-
-
+    for (int i = 0;  i < img -> height;i++){
+        for (int j = 0; j < img -> width; j++ ) {
+            img -> data[i * img -> width + j] = M[i][j];
+        }
+        free(M[i]);
     }
+    free(M);
+}
+
+
 
