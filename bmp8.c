@@ -114,16 +114,4 @@ int **buildMatrix(int *array, int n) {
 }
 
 
-void bmp8_applyFilter(t_bmp8 * img, float ** kernel, int kernelSize){
-    int neighbours = (kernelSize * kernelSize) / 2; //Interval of required neighbour, otherwise we don't do the transformation
-    int center = kernelSize / 2;
-
-
-
-
-
-    }
-
-
-    }
 
