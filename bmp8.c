@@ -95,22 +95,55 @@ void bmp8_threshold(t_bmp8 * img, int threshold){
         img->data[i] = (img->data[i] < threshold) ? 0 : 255;
     }
 }
-int **buildMatrix(int *array, int n) {
+
+float** buildMatrix(unsigned char* array,int m, int n) {
     // Allouer la mémoire pour un tableau de n pointeurs (lignes)
-    int **matrix = (int **)malloc(n * sizeof(int *));
+    float **matrix = (float **)malloc(n * sizeof(float *));
 
     // Allouer de la mémoire pour chaque ligne de la matrice
-    for (int i = 0; i < n; i++) {
-        matrix[i] = (int *)malloc(n * sizeof(int));
+    for (int i = 0; i < m; i++) {
+        matrix[i] = (float *)malloc(n * sizeof(float));
     }
     // Remplir la matrice avec les valeurs du tableau 1D
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < m; i++) {
         for (int j = 0; j < n; j++) {
             matrix[i][j] = array[i * n + j];  // Mappage tableau 1D -> matrice 2D
         }
     }
-
     return matrix;
+}
+
+
+void bmp8_applyFilter(t_bmp8 * img, float ** kernel, int kernelSize) {
+    int center = kernelSize/2;
+    float** M1 = buildMatrix(img -> data, img -> height, img -> width); // The one used to store the data
+    float** M2 = buildMatrix(img -> data, img -> height, img -> width); // The one used for calculations
+
+
+    for (int i = 1; i < img -> height - 1; i++) {
+        for (int j = 1; j < img -> width - 1; j++) {
+            float sum = 0;
+            for (int k = -center; k <= center; k++) {
+                for (int l = -center; l <= center; l++) {
+                    sum += M2[i + k][j + l] * kernel[center - k][center - l];  // Accès aux voisins
+                }
+            }
+            if (sum < 0)
+                sum = 0;
+            if (sum > 255)
+                sum = 255;
+            M1[i][j] = sum;
+        }
+    }
+    for (int i = 0;  i < img -> height;i++){
+        for (int j = 0; j < img -> width; j++ ) {
+            img -> data[i * img -> width + j] = (unsigned char)M1[i][j];
+        }
+        free(M1[i]);
+        free(M2[i]);
+    }
+    free(M1);
+    free(M2);
 }
 
 

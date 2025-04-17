@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/bmp24.c.obj"
+  "CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/bmp24.c.obj.d"
   "CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/bmp8.c.obj"
   "CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/bmp8.c.obj.d"
   "CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/main.c.obj"
