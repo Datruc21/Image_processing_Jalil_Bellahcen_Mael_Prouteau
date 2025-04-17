@@ -4,7 +4,7 @@
 
 int main(void) {
     t_bmp8 * new_image = bmp8_loadImage("../lena_gray.bmp");
-    float gaussian_blur_kernel[3][3] = {
+    float gaussian_blur[3][3] = {
         {1.0f/16, 2.0f/16, 1.0f/16},
         {2.0f/16, 4.0f/16, 2.0f/16},
         {1.0f/16, 2.0f/16, 1.0f/16}
@@ -26,7 +26,7 @@ int main(void) {
     for (int i = 0; i < 3; i++) {
         filter[i] = (float *)malloc(3 * sizeof(float));
         for (int j = 0; j < 3; j++) {
-            filter[i][j] = outline[i][j];
+            filter[i][j] = gaussian_blur[i][j];
         }
     }
     bmp8_printInfo(new_image);

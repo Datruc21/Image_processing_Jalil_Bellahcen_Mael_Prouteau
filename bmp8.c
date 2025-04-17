@@ -116,8 +116,8 @@ float** buildMatrix(unsigned char* array,int m, int n) {
 
 void bmp8_applyFilter(t_bmp8 * img, float ** kernel, int kernelSize) {
     int center = kernelSize/2;
-    float** M1 = buildMatrix(img -> data, img -> height, img -> width);
-    float** M2 = buildMatrix(img -> data, img -> height, img -> width);
+    float** M1 = buildMatrix(img -> data, img -> height, img -> width); // The one used to store the data
+    float** M2 = buildMatrix(img -> data, img -> height, img -> width); // The one used for calculations
 
 
     for (int i = 1; i < img -> height - 1; i++) {

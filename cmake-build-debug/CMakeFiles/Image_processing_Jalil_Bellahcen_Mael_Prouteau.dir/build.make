@@ -96,21 +96,37 @@ CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/bmp8.c.s: cmake_fo
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/bmp8.c.s"
 	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\jalil\CLionProjects\Image_processing_Jalil_Bellahcen_Mael_Prouteau\bmp8.c -o CMakeFiles\Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir\bmp8.c.s
 
+CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/bmp24.c.obj: CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/flags.make
+CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/bmp24.c.obj: C:/Users/jalil/CLionProjects/Image_processing_Jalil_Bellahcen_Mael_Prouteau/bmp24.c
+CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/bmp24.c.obj: CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\jalil\CLionProjects\Image_processing_Jalil_Bellahcen_Mael_Prouteau\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/bmp24.c.obj"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/bmp24.c.obj -MF CMakeFiles\Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir\bmp24.c.obj.d -o CMakeFiles\Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir\bmp24.c.obj -c C:\Users\jalil\CLionProjects\Image_processing_Jalil_Bellahcen_Mael_Prouteau\bmp24.c
+
+CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/bmp24.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/bmp24.c.i"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\jalil\CLionProjects\Image_processing_Jalil_Bellahcen_Mael_Prouteau\bmp24.c > CMakeFiles\Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir\bmp24.c.i
+
+CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/bmp24.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/bmp24.c.s"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\jalil\CLionProjects\Image_processing_Jalil_Bellahcen_Mael_Prouteau\bmp24.c -o CMakeFiles\Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir\bmp24.c.s
+
 # Object files for target Image_processing_Jalil_Bellahcen_Mael_Prouteau
 Image_processing_Jalil_Bellahcen_Mael_Prouteau_OBJECTS = \
 "CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/main.c.obj" \
-"CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/bmp8.c.obj"
+"CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/bmp8.c.obj" \
+"CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/bmp24.c.obj"
 
 # External object files for target Image_processing_Jalil_Bellahcen_Mael_Prouteau
 Image_processing_Jalil_Bellahcen_Mael_Prouteau_EXTERNAL_OBJECTS =
 
 Image_processing_Jalil_Bellahcen_Mael_Prouteau.exe: CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/main.c.obj
 Image_processing_Jalil_Bellahcen_Mael_Prouteau.exe: CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/bmp8.c.obj
+Image_processing_Jalil_Bellahcen_Mael_Prouteau.exe: CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/bmp24.c.obj
 Image_processing_Jalil_Bellahcen_Mael_Prouteau.exe: CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/build.make
 Image_processing_Jalil_Bellahcen_Mael_Prouteau.exe: CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/linkLibs.rsp
 Image_processing_Jalil_Bellahcen_Mael_Prouteau.exe: CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/objects1.rsp
 Image_processing_Jalil_Bellahcen_Mael_Prouteau.exe: CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\jalil\CLionProjects\Image_processing_Jalil_Bellahcen_Mael_Prouteau\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable Image_processing_Jalil_Bellahcen_Mael_Prouteau.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\jalil\CLionProjects\Image_processing_Jalil_Bellahcen_Mael_Prouteau\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable Image_processing_Jalil_Bellahcen_Mael_Prouteau.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

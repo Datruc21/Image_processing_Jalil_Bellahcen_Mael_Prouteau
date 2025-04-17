@@ -128,6 +128,30 @@ Image_processing_Jalil_Bellahcen_Mael_Prouteau/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir\build.make CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/build
 .PHONY : Image_processing_Jalil_Bellahcen_Mael_Prouteau/fast
 
+bmp24.obj: bmp24.c.obj
+.PHONY : bmp24.obj
+
+# target to build an object file
+bmp24.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir\build.make CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/bmp24.c.obj
+.PHONY : bmp24.c.obj
+
+bmp24.i: bmp24.c.i
+.PHONY : bmp24.i
+
+# target to preprocess a source file
+bmp24.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir\build.make CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/bmp24.c.i
+.PHONY : bmp24.c.i
+
+bmp24.s: bmp24.c.s
+.PHONY : bmp24.s
+
+# target to generate assembly for a file
+bmp24.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir\build.make CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/bmp24.c.s
+.PHONY : bmp24.c.s
+
 bmp8.obj: bmp8.c.obj
 .PHONY : bmp8.obj
 
@@ -185,6 +209,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... Image_processing_Jalil_Bellahcen_Mael_Prouteau
+	@echo ... bmp24.obj
+	@echo ... bmp24.i
+	@echo ... bmp24.s
 	@echo ... bmp8.obj
 	@echo ... bmp8.i
 	@echo ... bmp8.s
