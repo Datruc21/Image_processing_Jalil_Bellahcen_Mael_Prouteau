@@ -67,22 +67,41 @@ t_bmp24* bmp24_loadImage(const char * filename) {
     file_rawRead(BITMAP_WIDTH,&width,sizeof(int),1,f);
     file_rawRead(BITMAP_HEIGHT,&height,sizeof(int),1,f);
     file_rawRead(BITMAP_DEPTH,&colorDepth,sizeof(int),1,f);
-
+    if (colorDepth != DEFAULT_DEPTH) {
+        printf("This image is not 24 bits deep!");
+        fclose(f);
+        return NULL;
+    }
     t_bmp24* image = bmp24_allocate(width,height,colorDepth);
     if (!image) {
         fclose(f);
+        return NULL;
     }
     t_bmp_header header;
     t_bmp_info header_info;
-    file_rawRead(BITMAP_MAGIC, &header, sizeof(t_bmp_header), 1, f); // Header of the file
+    file_rawRead(BITMAP_MAGIC, &header, HEADER_SIZE, 1, f); // Header of the file
+    file_rawRead(14,&header_info,INFO_SIZE,1,f);
     image -> header = header;
     image -> width = width;
     image -> height = height;
     image -> colorDepth = colorDepth;
     image -> data = bmp24_allocateDataPixels(width, height);
-
-
-
+    image -> header_info = header_info;
     fclose(f);
     return image;
+} // need to add the pixels data and review the header info
+
+
+
+void bmp24_readPixelValue(t_bmp24* image, int x, int y, FILE * file) { //pixel data is a reversed matrix, the first row is at the bottom
+    t_pixel new;
+    file_rawRead(BITMAP_OFFSET+x+((image -> height) - y) * (image -> width),&new,3,1,file);
+
+
+}
+
+void bmp24_readPixelData(t_bmp24* image, FILE* file) {
+
+
+
 }
