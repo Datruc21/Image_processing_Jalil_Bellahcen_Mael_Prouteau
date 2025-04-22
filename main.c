@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include "bmp8.h"
 #include <stdlib.h>
+#include "bmp24.h"
 
-int main(void) {
+/*int main(void) {
     t_bmp8 * new_image = bmp8_loadImage("../lena_gray.bmp");
     float gaussian_blur[3][3] = {
         {1.0f/16, 2.0f/16, 1.0f/16},
@@ -33,5 +34,10 @@ int main(void) {
     bmp8_applyFilter(new_image,filter,3);
     bmp8_saveImage("../img.bmp",new_image);
     bmp8_free(new_image);
+    return 0;
+}*/
+
+int main(void) {
+    t_bmp24 * new = bmp24_loadImage()
     return 0;
 }

@@ -1,3 +1,7 @@
+#include <stdint.h>
+#include <stdlib.h>
+#include <stdio.h>
+
 #ifndef BMP24_H
 #define BMP24_H
 
@@ -25,6 +29,8 @@ typedef struct {
     uint16_t reserved2;
     uint32_t offset;
 } t_bmp_header;
+
+
 typedef struct {
     uint32_t size;
     int32_t width;
@@ -40,9 +46,9 @@ typedef struct {
 } t_bmp_info;
 
 typedef struct {
-    uint8_t red;
-    uint8_t green;
     uint8_t blue;
+    uint8_t green;
+    uint8_t red;
 } t_pixel;
 
 typedef struct {
@@ -51,8 +57,19 @@ typedef struct {
     int width;
     int height;
     int colorDepth;
-    t_pixel **data;
+    t_pixel** data;
 } t_bmp24;
+
+t_pixel** bmp24_allocateDataPixels(int width, int height);
+void bmp24_freeDataPixels(t_pixel** pixels, int height);
+t_bmp24* bmp24_allocate(int width, int height, int colorDepth);
+void bmp24_free(t_bmp24* img);
+t_bmp24* bmp24_loadImage(const char* filename);
+void bmp24_saveImage(t_bmp24* img, const char* filename);
+void bmp24_readPixelValue(t_bmp24* image, int x, int y, FILE * file);
+void bmp24_readPixelData(t_bmp24* image, FILE* file);
+void bmp24_writePixelValue(t_bmp24* image, int x, int y, FILE * file);
+void bmp24_writePixelData(t_bmp24* image, FILE* file);
 
 
 #endif //BMP24_H
