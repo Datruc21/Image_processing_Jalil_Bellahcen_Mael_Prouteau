@@ -96,12 +96,12 @@ t_bmp24* bmp24_loadImage(const char * filename) {
 void bmp24_readPixelValue(t_bmp24* image, int x, int y, FILE * file) { //pixel data is a reversed matrix, the first row is at the bottom
     t_pixel new;
     file_rawRead(BITMAP_OFFSET+x+((image -> height) - y) * (image -> width),&new,3,1,file);
-
+    return;
 
 }
 
 void bmp24_readPixelData(t_bmp24* image, FILE* file) {
 
-
+    return;
 
 }
