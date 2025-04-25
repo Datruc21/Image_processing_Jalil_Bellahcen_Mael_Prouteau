@@ -20,6 +20,35 @@ void bmp8_brightness(t_bmp8 * img, int value);
 void bmp8_threshold(t_bmp8 * img, int threshold);
 void bmp8_applyFilter(t_bmp8 * img, float ** kernel, int kernelSize);
 
+float gaussian_blur[3][3] = {
+    {1.0f/16, 2.0f/16, 1.0f/16},
+    {2.0f/16, 4.0f/16, 2.0f/16},
+    {1.0f/16, 2.0f/16, 1.0f/16}
+};
+float Outline[3][3] = {
+    {-1, -1, -1},
+    {-1, 8, -1},
+    {-1, -1, -1}
+};
+float box_blur[3][3] = {
+    {1.0f/9, 1.0f/9, 1.0f/9},
+    {1.0f/9, 1.0f/9, 1.0f/9},
+    {1.0f/9, 1.0f/9, 1.0f/9}
+};
+float sharpen[3][3] = {
+    {0,-1,0},
+    {-1,5,-1},
+    {0,-1,0}
+};
+
+
+float Emboss[3][3] = {
+    {-2,-1,0},
+    {-1,1,1},
+    {0,1,2}
+};
+
+
 
 
 #endif //BMP8_H
