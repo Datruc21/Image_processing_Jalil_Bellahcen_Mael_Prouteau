@@ -65,13 +65,14 @@ float Emboss[3][3] = {
 };
 
 t_bmp8* open_file() {
-  char* file_name;
+  char* file_name = (char* )malloc(256);
   printf("File path :");
   scanf("%s", file_name);
   t_bmp8* image;
   char* complete_name = malloc(strlen(file_name) + 5);
   strcpy(complete_name, "../");
   strcat(complete_name, file_name);
+  printf("File name:%s\n", complete_name);
   image = bmp8_loadImage(complete_name);
   if (image == NULL) {
   printf("Error opening file\n");
@@ -82,7 +83,7 @@ t_bmp8* open_file() {
 }
 
 void save_file(t_bmp8* image) {
- char* file_name;
+ char* file_name = malloc(256);
  printf("File path :");
  scanf("%s", file_name);
  bmp8_saveImage(strcat("../", file_name), image);
