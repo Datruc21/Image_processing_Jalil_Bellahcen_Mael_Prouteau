@@ -99,7 +99,7 @@ t_bmp8* choose_filter(t_bmp8* image) {
  printf("1. Negative\n");
  printf("2. Brightness\n");
  printf("3. Black and White\n");
- printf("4. Box Blure");
+ printf("4. Box Blure\n");
  printf("5. Gaussian Blur\n");
  printf("6. Sharpness\n");
  printf("7. Outline\n");
