@@ -38,6 +38,8 @@
     return 0;
 }*/
 
+//with only the code above, main works
+
 float gaussian_blur[3][3] = {
     {1.0f/16, 2.0f/16, 1.0f/16},
     {2.0f/16, 4.0f/16, 2.0f/16},
