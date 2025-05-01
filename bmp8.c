@@ -51,6 +51,7 @@ t_bmp8 * bmp8_loadImage(const char* filename) {
 
 
 void bmp8_saveImage(const char * filename, t_bmp8 * img){
+    printf("Trying to save to %s\n", filename);
     FILE *f = fopen(filename, "wb");
     if (f == NULL){
         printf("Error while writing the file!\n");

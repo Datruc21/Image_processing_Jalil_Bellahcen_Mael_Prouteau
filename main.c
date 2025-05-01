@@ -89,12 +89,14 @@ t_bmp8* open_file() {
 void save_file(t_bmp8* image) {
     char* file_name = malloc(256);
     printf("File path :");
-    scanf("%s", file_name);
+    scanf(" %s", file_name);
     char* complete_name = malloc(strlen(file_name) + 5);
     strcpy(complete_name, "../");
     strcat(complete_name, file_name);
     printf("File name:%s\n", complete_name);
     bmp8_saveImage(complete_name, image);
+    bmp8_free(image);
+    printf("Image saved succesfully\n");
 }
 
 t_bmp8* choose_filter(t_bmp8* image) {
@@ -103,7 +105,7 @@ t_bmp8* choose_filter(t_bmp8* image) {
  printf("1. Negative\n");
  printf("2. Brightness\n");
  printf("3. Black and White\n");
- printf("4. Box Blure\n");
+ printf("4. Box Blur\n");
  printf("5. Gaussian Blur\n");
  printf("6. Sharpness\n");
  printf("7. Outline\n");
@@ -184,9 +186,8 @@ t_bmp8* choose_filter(t_bmp8* image) {
  return image;
 }
 
-void main_menu(void) {
+void main_menu(t_bmp8* image) {
   int option;
-  t_bmp8* image;
   printf("Please choose an option :\n");
   printf("\t 1. Open an image\n");
   printf("\t 2. Save an image\n");
@@ -198,30 +199,33 @@ void main_menu(void) {
   case 1:
     printf("Your choice: 1\n");
     image = open_file();
-    main_menu();
+    main_menu(image);
     break;
   case 2:
     printf("Your choice: 2\n");
     save_file(image);
-    main_menu();
+    main_menu(image);
     break;
   case 3:
     printf("Your choice: 3\n");
     image = choose_filter(image);
-    main_menu();
+    printf("Filter applied ...\n");
+    main_menu(image);
     break;
   case 4:
     printf("Your choice: 4\n");
     bmp8_printInfo(image);
-    main_menu();
+    main_menu(image);
     break;
   }
+    printf("Filter chosen");
   return;
 }
 
 int main(void) {
-  main_menu();
-  return 0;
+    t_bmp8* image;
+    main_menu(image);
+    return 0;
   }
 
 
