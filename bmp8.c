@@ -88,6 +88,8 @@ void bmp8_brightness(t_bmp8 * img, int value){
             img -> data[i] = 0;
         else if (img -> data[i] + value >255)
             img -> data[i] = 255;
+        else
+            img -> data[i] = img -> data[i] + value;
     }
 }
 

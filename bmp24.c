@@ -80,28 +80,99 @@ t_bmp24* bmp24_loadImage(const char * filename) {
     t_bmp_header header;
     t_bmp_info header_info;
     file_rawRead(BITMAP_MAGIC, &header, HEADER_SIZE, 1, f); // Header of the file
-    file_rawRead(14,&header_info,INFO_SIZE,1,f);
+    file_rawRead(HEADER_SIZE,&header_info,INFO_SIZE,1,f);
     image -> header = header;
-    image -> width = width;
-    image -> height = height;
-    image -> colorDepth = colorDepth;
-    image -> data = bmp24_allocateDataPixels(width, height);
+    bmp24_readPixelData(image,f);
     image -> header_info = header_info;
     fclose(f);
     return image;
-} // need to add the pixels data and review the header info
+}
 
 
-
-void bmp24_readPixelValue(t_bmp24* image, int x, int y, FILE * file) { //pixel data is a reversed matrix, the first row is at the bottom
-    t_pixel new;
-    file_rawRead(BITMAP_OFFSET+x+((image -> height) - y) * (image -> width),&new,3,1,file);
-    return;
-
+void bmp24_readPixelValue(t_bmp24* image, int x, int y, FILE * file) {
+    file_rawRead(BITMAP_OFFSET+(x*(image -> height) + y),&(image -> data[image -> height-x][y]),3,1,file);
+    uint8_t tmp = (image -> data[x-image -> height][y]).red;
+    (image -> data[image -> height-x][y]).red = (image -> data[image -> height-x][y]).blue;
+    (image -> data[image -> height-x][y]).blue = tmp;
 }
 
 void bmp24_readPixelData(t_bmp24* image, FILE* file) {
-
-    return;
-
+    for (int i=1; i <= (image -> height) ; i++) {
+        for (int j = 0; j<image->width; j++) {
+            bmp24_readPixelValue(image, (image -> height)-i, j, file);
+        }
+    }
 }
+
+
+void bmp24_writePixelValue(t_bmp24* image, int x, int y, FILE * file) {
+    uint8_t tmp = (image -> data[image -> height-x][y]).red;
+    (image -> data[image -> height-x][y]).red = (image -> data[image -> height-x][y]).blue;
+    (image -> data[image -> height-x][y]).blue = tmp;
+    file_rawWrite(BITMAP_OFFSET+x+((image -> height) - y) * (image -> width),&(image -> data[image -> height-x][y]),3,1,file);
+}
+
+void bmp24_writePixelData(t_bmp24* image, FILE* file) {
+    for (int i=1; i < (image -> height); i++) { //we begin at last row and go up
+        for (int j = 0; j<image->width; j++) {
+            bmp24_writePixelValue(image, (image-> height)-i, j, file);
+        }
+    }
+}
+
+
+void bmp24_saveImage(t_bmp24* img, const char* filename) {
+    FILE* f;
+    f = fopen(filename, "wb");
+    if (f == NULL){printf("Error while reading the file!\n");return;}
+    file_rawWrite(BITMAP_MAGIC,&(img -> header),HEADER_SIZE,1,f);
+    file_rawWrite(HEADER_SIZE,&(img -> header_info),INFO_SIZE,1,f);
+    bmp24_writePixelData(img,f);
+    fclose(f);
+}
+
+
+void bmp24_negative (t_bmp24* img) {
+    for (int i = 0; i<img -> height; i++) {
+        for (int j = 0; j<img -> width; j++) {
+            (img -> data[i][j]).red = 255 - (img -> data[i][j]).red;
+            (img -> data[i][j]).green = 255 - (img -> data[i][j]).green;
+            (img -> data[i][j]).blue = 255 - (img -> data[i][j]).blue;
+        }
+    }
+}
+void bmp24_grayscale (t_bmp24* img) {
+    for (int i = 0; i<img -> height; i++) {
+        for (int j = 0; j<img -> width; j++) {
+            int avg = ((img -> data[i][j]).blue + (img -> data[i][j]).green + (img -> data[i][j]).red)/3;
+            (img -> data[i][j]).red = avg;
+            (img -> data[i][j]).green = avg;
+            (img -> data[i][j]).blue = avg;
+        }
+    }
+}
+void bmp24_brightness (t_bmp24* img, int value) {
+    for (int i = 0; i<img -> height; i++) {
+        for (int j = 0; j<img -> width; j++){
+            if ((img -> data[i][j].red) + value <0)
+                img -> data[i][j].red = 0;
+            else if ((img -> data[i][j].red) + value >255)
+                img -> data[i][j].red = 255;
+            else
+                (img -> data[i][j].red) + value;
+            if ((img -> data[i][j].green) + value <0)
+                img -> data[i][j].green = 0;
+            else if ((img -> data[i][j].green) + value >255)
+                img -> data[i][j].green = 255;
+            else
+                (img -> data[i][j].green) + value;
+            if ((img -> data[i][j].blue) + value <0)
+                img -> data[i][j].blue = 0;
+            else if ((img -> data[i][j].blue) + value >255)
+                img -> data[i][j].blue = 255;
+            else
+                (img -> data[i][j].blue) + value;
+        }
+    }
+}
+
