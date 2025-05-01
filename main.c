@@ -4,6 +4,8 @@
 #include "bmp24.h"
 #include "string.h"
 
+//this is a test
+
 /*int main(void) {
     t_bmp8 * new_image = bmp8_loadImage("../lena_gray.bmp");
     float gaussian_blur[3][3] = {
