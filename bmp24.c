@@ -195,7 +195,7 @@ void bmp24_brightness (t_bmp24* img, int value) {
     }
 }
 
-void bmp24_convolution(t_bmp24 * img, int x, int y, float ** kernel, int kernelSize) {
+void bmp24_convolution(t_bmp24 * img,float ** kernel, int kernelSize) {
     int center = kernelSize / 2;
     t_pixel** A = bmp24_allocateDataPixels(img -> width, img -> height);
     for (int i = 0; i<img -> height; i++) {
