@@ -173,24 +173,24 @@ void bmp24_grayscale (t_bmp24* img) {
 void bmp24_brightness (t_bmp24* img, int value) {
     for (int i = 0; i<img -> height; i++) {
         for (int j = 0; j<img -> width; j++){
-            if ((img -> data[i][j].red) + value <0)
+            (img -> data[i][j].red) += value;
+            (img -> data[i][j].green) += value;
+            (img -> data[i][j].blue) += value;
+            int test_r = (img -> data[i][j].red);
+            int test_g = (img -> data[i][j].green);
+            int test_b = (img -> data[i][j].blue);
+            if (test_r<0)
                 img -> data[i][j].red = 0;
-            else if ((img -> data[i][j].red) + value >255)
+            else if (test_r>255)
                 img -> data[i][j].red = 255;
-            else
-                (img -> data[i][j].red) + value;
-            if ((img -> data[i][j].green) + value <0)
+            if (test_g <0)
                 img -> data[i][j].green = 0;
-            else if ((img -> data[i][j].green) + value >255)
+            else if (test_g >255)
                 img -> data[i][j].green = 255;
-            else
-                (img -> data[i][j].green) + value;
-            if ((img -> data[i][j].blue) + value <0)
+            if (test_b <0)
                 img -> data[i][j].blue = 0;
-            else if ((img -> data[i][j].blue) + value >255)
+            else if (test_b >255)
                 img -> data[i][j].blue = 255;
-            else
-                (img -> data[i][j].blue) + value;
         }
     }
 }
