@@ -203,8 +203,8 @@ void bmp24_convolution(t_bmp24 * img,float ** kernel, int kernelSize) {
             A[i][j] = img->data[i][j];
         }
     }
-    for (int i = 0; i < img-> height; i++) {
-        for (int j = 0; j<img -> width; j++) {
+    for (int i = 1; i < img-> height-1; i++) {
+        for (int j = 1; j<img -> width-1; j++) {
             float sum_b = 0;
             float sum_g = 0;
             float sum_r = 0;
