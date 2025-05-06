@@ -123,9 +123,9 @@ void save_file(t_bmp8* image8, t_bmp24* image24) {
             bmp8_saveImage(complete_name, image8);
             bmp8_free(image8);
             break;
-        /*case 2:
+        case 2:
             bmp24_saveImage(image24, complete_name);
-            bmp24_free(image24);*/
+            bmp24_free(image24);
     }
     printf("Image saved succesfully\n");
 }
@@ -220,12 +220,12 @@ void choose_filter(t_bmp8* image8, t_bmp24* image24) {
              bmp8_applyFilter(image8,emboss,3);
              break;
          }
-        /*break;
+        break;
         case 2:
             printf("Choose a filter\n");
              printf("1. Negative\n");
              printf("2. Brightness\n");
-             printf("3. Black and White\n");
+             printf("3. Gray Scale\n");
              printf("4. Box Blur\n");
              printf("5. Gaussian Blur\n");
              printf("6. Sharpness\n");
@@ -243,10 +243,7 @@ void choose_filter(t_bmp8* image8, t_bmp24* image24) {
                  bmp24_brightness(image24, brightness);
                  break;
                  case 3:
-                 printf("Select a threshold \n");
-                 int threshold;
-                 scanf("%d", &threshold);
-                 bmp24_threshold(image24, threshold);
+                 bmp24_grayscale(image24);
                  break;
                  case 4:
                  float** boxBlur = (float **)malloc(3 * sizeof(float *));
@@ -257,7 +254,7 @@ void choose_filter(t_bmp8* image8, t_bmp24* image24) {
                             boxBlur[i][j] = box_blur[i][j];
                         }
                     }
-                 bmp24_applyFilter(image24,boxBlur,3);
+                 bmp24_convolution(image24,boxBlur,3);
                  break;
                  case 5:
                  float** gaussianBlur = (float **)malloc(3 * sizeof(float *));
@@ -268,7 +265,7 @@ void choose_filter(t_bmp8* image8, t_bmp24* image24) {
                             gaussianBlur[i][j] = gaussian_blur[i][j];
                         }
                     }
-                 bmp24_applyFilter(image24,gaussianBlur,3);
+                 bmp24_convolution(image24,gaussianBlur,3);
                  break;
                  case 6 :
                  float** sharpness = (float **)malloc(3 * sizeof(float *));
@@ -279,7 +276,7 @@ void choose_filter(t_bmp8* image8, t_bmp24* image24) {
                             sharpness[i][j] = sharpen[i][j];
                         }
                     }
-                 bmp24_applyFilter(image24,sharpness,3);
+                 bmp24_convolution(image24,sharpness,3);
                  break;
                  case 7:
                  float** outline = (float **)malloc(3 * sizeof(float *));
@@ -290,7 +287,7 @@ void choose_filter(t_bmp8* image8, t_bmp24* image24) {
                             outline[i][j] = Outline[i][j];
                         }
                     }
-                 bmp24_applyFilter(image24,outline,3);
+                 bmp24_convolution(image24,outline,3);
                  break;
                  case 8:
                  float** emboss = (float **)malloc(3 * sizeof(float *));
@@ -301,10 +298,10 @@ void choose_filter(t_bmp8* image8, t_bmp24* image24) {
                             emboss[i][j] = Emboss[i][j];
                         }
                     }
-                 bmp24_applyFilter(image24,emboss,3);
+                 bmp24_convolution(image24,emboss,3);
                  break;
              }
-        break;*/
+        break;
     }
 
 }
@@ -341,7 +338,6 @@ void main_menu(t_bmp8* image8, t_bmp24* image24) {
     main_menu(image8, image24);
     break;
   }
-    printf("Filter chosen");
   return;
 }
 
