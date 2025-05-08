@@ -74,6 +74,6 @@ void bmp24_negative(t_bmp24* img);
 void bmp24_grayscale(t_bmp24* img);
 void bmp24_brightness(t_bmp24* img, int value);
 void bmp24_convolution(t_bmp24 * img,float ** kernel, int kernelSize);
-
+void bmp24_equalize(t_bmp24 * img);
 
 #endif //BMP24_H
