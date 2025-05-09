@@ -23,4 +23,5 @@ CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/bmp8.c.obj: \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.2/bin/mingw/x86_64-w64-mingw32/include/swprintf.inl \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.2/bin/mingw/x86_64-w64-mingw32/include/sec_api/stdio_s.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.2/bin/mingw/x86_64-w64-mingw32/include/string.h \
- C:/Program\ Files/JetBrains/CLion\ 2024.3.2/bin/mingw/x86_64-w64-mingw32/include/sec_api/string_s.h
+ C:/Program\ Files/JetBrains/CLion\ 2024.3.2/bin/mingw/x86_64-w64-mingw32/include/sec_api/string_s.h \
+ C:/Program\ Files/JetBrains/CLion\ 2024.3.2/bin/mingw/x86_64-w64-mingw32/include/math.h

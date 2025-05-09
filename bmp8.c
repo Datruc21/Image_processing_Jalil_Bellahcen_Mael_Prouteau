@@ -152,7 +152,7 @@ void bmp8_applyFilter(t_bmp8 * img, float ** kernel, int kernelSize) {
 
 unsigned int* bmp8_computeHistogram(t_bmp8* img) {
     unsigned int* histogram = (unsigned int *)malloc(256 * sizeof(unsigned int));
-    for (int i = 0; i < 256; i++) {//intiialize all values to 0
+    for (int i = 0; i < 256; i++) {//initialize all values to 0
         histogram[i] = 0;
     }
     for (int j = 0; j < img->dataSize; j++) {//add 1 each time
