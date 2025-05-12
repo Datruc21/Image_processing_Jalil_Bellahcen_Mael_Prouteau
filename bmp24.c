@@ -1,4 +1,5 @@
 #include "bmp24.h"
+#include "bmp8.h"
 
 void file_rawRead (uint32_t position, void * buffer, uint32_t size, size_t n, FILE * file) {
     fseek(file, position, SEEK_SET);
@@ -251,11 +252,33 @@ void bmp24_equalize(t_bmp24 * img) {
             copy[i][j].blue = 0.615*R - 0.51499*G + 0.10001*B;
         }
     }
-    //Now we do the whole histogram of copy.red
+    //Now we do the whole histogram of copy.red : need to convert it to 1D array then back into a matrix
+    unsigned int* data = (unsigned int*)malloc(sizeof(unsigned int)*(img -> height*img -> width));
+    for (int i = 0; i<img -> height; i++) {
+        for (int j = 0; j<img -> width; j++) {
+            data[i*img -> width + j] = copy[i][j].red;
+        }
+    }
+    unsigned int* histo = (unsigned int*)malloc(sizeof(unsigned int)*256);
+    for (int i = 0; i<256; i++) {
+        histo[i] = 0;
+    }
+    for (int i = 0; i<(img -> height)*(img -> width); i++) {
+        histo[data[i]] += 1;
+    }
 
-
-
-
+    unsigned int* hist_eq = bmp8_computeCDF(histo); // The equalized histo
+    for (int i = 0; i < (img -> height*img -> width); i++) {
+        data[i] = hist_eq[data[i]];
+    }
+    free(histo);
+    free(hist_eq);
+    //Now into a matrix
+    for (int i = 0; i<(img -> height); i++) {
+        for (int j = 0; j<img -> width; j++) {
+            copy[i][j].red = hist_eq[copy[i][j].red];
+        }
+    }
     //We convert it back
     for (int i = 0; i<img -> height; i++) {
         for (int j = 0; j<img -> width; j++) {
