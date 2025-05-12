@@ -312,11 +312,11 @@ void apply_histogram(t_bmp8* image8, t_bmp24* image24) {
     switch (option) {
         case 1:
             unsigned int* values = bmp8_computeHistogram(image8);
-        unsigned int* histogram = bmp8_computeCDF(values);
-        bmp8_equalize(image8, histogram);
-        break;
+            unsigned int* histogram = bmp8_computeCDF(values);
+            bmp8_equalize(image8, histogram);
+            break;
         case 2:
-            // for bmp24 usage
+            bmp24_equalize(image24);
             break;
     }
 }
