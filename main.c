@@ -102,8 +102,6 @@ void open_file(t_bmp8** image8, t_bmp24** image24) {
             printf("Image loaded succesfully\n");
             break;
     }
-
-
 }
 
 void save_file(t_bmp8* image8, t_bmp24* image24) {
@@ -306,6 +304,23 @@ void choose_filter(t_bmp8* image8, t_bmp24* image24) {
 
 }
 
+void apply_histogram(t_bmp8* image8, t_bmp24* image24) {
+    int option;
+    printf("\t 1. Bmp8 image\n");
+    printf("\t 2. Bmp24 image\n");
+    scanf("%d", &option);
+    switch (option) {
+        case 1:
+            unsigned int* values = bmp8_computeHistogram(image8);
+        unsigned int* histogram = bmp8_computeCDF(values);
+        bmp8_equalize(image8, histogram);
+        break;
+        case 2:
+            // for bmp24 usage
+            break;
+    }
+}
+
 void main_menu(t_bmp8* image8, t_bmp24* image24) {
   int option;
   printf("Please choose an option :\n");
@@ -313,32 +328,39 @@ void main_menu(t_bmp8* image8, t_bmp24* image24) {
   printf("\t 2. Save an image\n");
   printf("\t 3. Apply a filter\n");
   printf("\t 4. Display image information\n");
-  printf("\t 5. Quit\n");
+    printf("\t 5. Histogram\n");
+  printf("\t 6. Quit\n");
   scanf("%d", &option);
   switch (option) {
-  case 1:
-      printf("Your choice: 1\n");
+      case 1:
+          printf("Your choice: 1\n");
       open_file(&image8, &image24);
       main_menu(image8, image24);
       break;
-  case 2:
-    printf("Your choice: 2\n");
-    save_file(image8, image24);
-    main_menu(image8, image24);
-    break;
-  case 3:
-    printf("Your choice: 3\n");
-    choose_filter(image8, image24);
-    printf("Filter applied ...\n");
-    main_menu(image8, image24);
-    break;
-  case 4:
-    printf("Your choice: 4\n");
-    bmp8_printInfo(image8);
-    main_menu(image8, image24);
-    break;
+      case 2:
+          printf("Your choice: 2\n");
+      save_file(image8, image24);
+      main_menu(image8, image24);
+      break;
+      case 3:
+          printf("Your choice: 3\n");
+      choose_filter(image8, image24);
+      printf("Filter applied ...\n");
+      main_menu(image8, image24);
+      break;
+      case 4:
+          printf("Your choice: 4\n");
+      bmp8_printInfo(image8);
+      main_menu(image8, image24);
+      break;
+
+      case 5:
+          printf("Your choice: 5\n");
+      //calculate the histogram and create the new image
+      apply_histogram(image8, image24);
+      main_menu(image8, image24);
+      break;
   }
-  return;
 }
 
 int main(void) {

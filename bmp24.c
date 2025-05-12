@@ -244,9 +244,9 @@ void bmp24_equalize(t_bmp24 * img) {
     for (int i = 0; i<img -> height; i++) {
         for (int j = 0; j<img -> width; j++) {
             copy[i][j] = img -> data[i][j]; // red = Y; U = green; V = blue
-            u_int8_t R =  img -> data[i][j].red;
-            u_int8_t G =  img -> data[i][j].green;
-            u_int8_t B =  img -> data[i][j].blue;
+            uint8_t R =  img -> data[i][j].red;
+            uint8_t G =  img -> data[i][j].green;
+            uint8_t B =  img -> data[i][j].blue;
             copy[i][j].red = 0.299*R + 0.587*G + 0.114*B;
             copy[i][j].green =  0.436*B - 0.14713*R - 0.28886*G;
             copy[i][j].blue = 0.615*R - 0.51499*G + 0.10001*B;
@@ -283,9 +283,9 @@ void bmp24_equalize(t_bmp24 * img) {
     for (int i = 0; i<img -> height; i++) {
         for (int j = 0; j<img -> width; j++) {
             copy[i][j] = img -> data[i][j]; // red = Y; U = green; V = blue
-            u_int8_t Y =  copy[i][j].red;
-            u_int8_t U =  copy[i][j].green;
-            u_int8_t V =  copy[i][j].blue;
+            uint8_t Y =  copy[i][j].red;
+            uint8_t U =  copy[i][j].green;
+            uint8_t V =  copy[i][j].blue;
             img->data[i][j].red = Y + 1.13983*V;
             img->data[i][j].green =  Y - 0.39465*U - 0.58060 * V;
             img->data[i][j].blue = Y + 2.03211 * U;
