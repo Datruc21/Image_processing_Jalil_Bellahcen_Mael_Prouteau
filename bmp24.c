@@ -1,6 +1,17 @@
 #include "bmp24.h"
 #include "bmp8.h"
 
+
+int limit(int a) {
+    if (a > 255) {
+        a = 255;
+    }
+    if (a < 0) {
+        a = 0;
+    }
+    return a;
+}
+
 void file_rawRead (uint32_t position, void * buffer, uint32_t size, size_t n, FILE * file) {
     fseek(file, position, SEEK_SET);
     fread(buffer, size, n, file);
@@ -26,6 +37,36 @@ void reverse_rows(t_pixel** M, int width, int height) {
     }
 }
 
+t_yuv_pixel** yuv_allocateDataPixels(int width, int height) {
+    t_yuv_pixel** matrix = (t_yuv_pixel**)malloc(sizeof(t_yuv_pixel*) * height);
+    if (!matrix) {
+        printf("Error in allocation for the YUV matrix!\n");
+        return NULL;
+    }
+
+    for (int i = 0; i < height; i++) {
+        matrix[i] = (t_yuv_pixel*)malloc(sizeof(t_yuv_pixel) * width);
+        if (!matrix[i]) {
+            printf("Error in allocation for YUV row %d!\n", i);
+            // Free already allocated rows
+            for (int j = 0; j < i; j++) {
+                free(matrix[j]);
+            }
+            free(matrix);
+            return NULL;
+        }
+    }
+
+    return matrix;
+}
+
+void yuv_freeDataPixels(t_yuv_pixel** pixels, int height) {
+    for (int i = 0; i < height; i++) {
+        free(pixels[i]);
+    }
+    free(pixels);
+}
+
 
 t_pixel** bmp24_allocateDataPixels(int width, int height) {
     t_pixel** matrix = (t_pixel**)malloc(sizeof(t_pixel*)*height);
@@ -37,6 +78,7 @@ t_pixel** bmp24_allocateDataPixels(int width, int height) {
         t_pixel* row = (t_pixel*)malloc(sizeof(t_pixel)*width);
         if (!row) {
             printf("Error in allocation for the pixels!\n");
+            free(matrix);
             return NULL;
         }
         matrix[i] = row;
@@ -240,23 +282,23 @@ void bmp24_convolution(t_bmp24 * img,float ** kernel, int kernelSize) {
 
 void bmp24_equalize(t_bmp24 * img) {
     //We create a copy of the array of pixels that will store the YUV
-    t_pixel** copy = bmp24_allocateDataPixels(img -> width, img -> height);
+    t_yuv_pixel** copy = yuv_allocateDataPixels(img -> width, img -> height);
+    //Conversion of the copy in the YUV space
     for (int i = 0; i<img -> height; i++) {
         for (int j = 0; j<img -> width; j++) {
-            copy[i][j] = img -> data[i][j]; // red = Y; U = green; V = blue
             uint8_t R =  img -> data[i][j].red;
             uint8_t G =  img -> data[i][j].green;
             uint8_t B =  img -> data[i][j].blue;
-            copy[i][j].red = 0.299*R + 0.587*G + 0.114*B;
-            copy[i][j].green =  0.436*B - 0.14713*R - 0.28886*G;
-            copy[i][j].blue = 0.615*R - 0.51499*G + 0.10001*B;
+            copy[i][j].Y = (float)(0.299*R + 0.587*G + 0.114*B);
+            copy[i][j].U=  (float)(0.436*B - 0.14713*R - 0.28886*G);
+            copy[i][j].V = (float)(0.615*R - 0.51499*G + 0.10001*B);
         }
     }
-    //Now we do the whole histogram of copy.red : need to convert it to 1D array then back into a matrix
+    //Now we do the whole histogram of copy.Y : need to convert it to 1D array then back into a matrix
     unsigned int* data = (unsigned int*)malloc(sizeof(unsigned int)*(img -> height*img -> width));
     for (int i = 0; i<img -> height; i++) {
         for (int j = 0; j<img -> width; j++) {
-            data[i*img -> width + j] = copy[i][j].red;
+            data[i*img -> width + j] = (unsigned int)copy[i][j].Y;
         }
     }
     unsigned int* histo = (unsigned int*)malloc(sizeof(unsigned int)*256);
@@ -266,31 +308,34 @@ void bmp24_equalize(t_bmp24 * img) {
     for (int i = 0; i<(img -> height)*(img -> width); i++) {
         histo[data[i]] += 1;
     }
-
     unsigned int* hist_eq = bmp8_computeCDF(histo); // The equalized histo
+
+    //Here is the bmp8 equalize equivalent
     for (int i = 0; i < (img -> height*img -> width); i++) {
-        data[i] = hist_eq[data[i]];
+        data[i] = limit((int)hist_eq[data[i]]);
+
     }
     free(histo);
-    free(hist_eq);
     //Now into a matrix
     for (int i = 0; i<(img -> height); i++) {
         for (int j = 0; j<img -> width; j++) {
-            copy[i][j].red = hist_eq[copy[i][j].red];
+            copy[i][j].Y = data[i*img -> width + j];
         }
     }
+    free(data);
+    free(hist_eq);
     //We convert it back
     for (int i = 0; i<img -> height; i++) {
         for (int j = 0; j<img -> width; j++) {
-            copy[i][j] = img -> data[i][j]; // red = Y; U = green; V = blue
-            uint8_t Y =  copy[i][j].red;
-            uint8_t U =  copy[i][j].green;
-            uint8_t V =  copy[i][j].blue;
-            img->data[i][j].red = Y + 1.13983*V;
-            img->data[i][j].green =  Y - 0.39465*U - 0.58060 * V;
-            img->data[i][j].blue = Y + 2.03211 * U;
+            float Y =  copy[i][j].Y;
+            float U =  copy[i][j].U;
+            float V =  copy[i][j].V;
+            img->data[i][j].red = limit((int)(Y + 1.13983*V));
+            img->data[i][j].green =  limit((int)(Y - 0.39465*U - 0.58060 * V));
+            img->data[i][j].blue = limit((int)(Y + 2.03211 * U));
         }
     }
+    yuv_freeDataPixels(copy, img -> height);
 }
 
 

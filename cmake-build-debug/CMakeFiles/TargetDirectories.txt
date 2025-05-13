@@ -1,3 +1,3 @@
-C:/Users/astri/CLionProjects/Image_processing_Jalil_Bellahcen_Mael_Prouteau/cmake-build-debug/CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir
-C:/Users/astri/CLionProjects/Image_processing_Jalil_Bellahcen_Mael_Prouteau/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/astri/CLionProjects/Image_processing_Jalil_Bellahcen_Mael_Prouteau/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/jalil/Bureau/programming/Image_processing_Jalil_Bellahcen_Mael_Prouteau/cmake-build-debug/CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir
+/home/jalil/Bureau/programming/Image_processing_Jalil_Bellahcen_Mael_Prouteau/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/jalil/Bureau/programming/Image_processing_Jalil_Bellahcen_Mael_Prouteau/cmake-build-debug/CMakeFiles/rebuild_cache.dir
