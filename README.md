@@ -1,1 +1,1 @@
-###                                                                                               Bmp Image Processor in C
+####                                                                                                               Bmp Image Processor in C
