@@ -4,7 +4,14 @@
 #include <string.h>
 #include <math.h>
 
+/*
+    Module handling bmp8 images (creation, saving, applying filters,etc...)
+    Done by Jalil Bellahcen and Maël Prouteau
+*/
+
+
 t_bmp8 * bmp8_loadImage(const char* filename) {
+    //Creates dynamically a bmp8 image and fills it
     FILE *f = fopen(filename, "rb");
     if (f == NULL){printf("Error while reading the file!\n");return NULL;}
     t_bmp8 * new_image = (t_bmp8 *) malloc(sizeof(t_bmp8));
@@ -52,6 +59,7 @@ t_bmp8 * bmp8_loadImage(const char* filename) {
 
 
 void bmp8_saveImage(const char * filename, t_bmp8 * img){
+    //Saves the image by writing it
     printf("Trying to save to %s\n", filename);
     FILE *f = fopen(filename, "wb");
     if (f == NULL){
@@ -64,11 +72,13 @@ void bmp8_saveImage(const char * filename, t_bmp8 * img){
 }
 
 void bmp8_free(t_bmp8 * img){
+    //Frees the image
     free(img -> data);
     free(img);
 }
 
 void bmp8_printInfo(t_bmp8 * img){
+    //Print informations related to the image
     if (img != NULL) {
         printf("Image info :\n");
         printf("\tWidth:%u\n",img -> width);
@@ -79,11 +89,13 @@ void bmp8_printInfo(t_bmp8 * img){
 }
 
 void bmp8_negative(t_bmp8 * img){
+    //Negative filter
     for (int i = 0;i<img -> dataSize; i++){
         img -> data[i] = 255 - img -> data[i];
     }
 }
 void bmp8_brightness(t_bmp8 * img, int value){
+    //Brightness filter
     for (int i = 0;i<img -> dataSize; i++){
         if (img -> data[i] + value <0)
             img -> data[i] = 0;
@@ -95,23 +107,21 @@ void bmp8_brightness(t_bmp8 * img, int value){
 }
 
 void bmp8_threshold(t_bmp8 * img, int threshold){
+    //Threshold filter
     for (int i = 0; i < img->dataSize; i++) {
         img->data[i] = (img->data[i] < threshold) ? 0 : 255;
     }
 }
 
 float** buildMatrix(unsigned char* array,int m, int n) {
-    // Allouer la mémoire pour un tableau de n pointeurs (lignes)
+    //Converts a 1D array into a matrix
     float **matrix = (float **)malloc(n * sizeof(float *));
-
-    // Allouer de la mémoire pour chaque ligne de la matrice
     for (int i = 0; i < m; i++) {
         matrix[i] = (float *)malloc(n * sizeof(float));
     }
-    // Remplir la matrice avec les valeurs du tableau 1D
     for (int i = 0; i < m; i++) {
         for (int j = 0; j < n; j++) {
-            matrix[i][j] = array[i * n + j];  // Mappage tableau 1D -> matrice 2D
+            matrix[i][j] = array[i * n + j];  // Mapping tableau 1D -> matrice 2D
         }
     }
     return matrix;
@@ -119,6 +129,7 @@ float** buildMatrix(unsigned char* array,int m, int n) {
 
 
 void bmp8_applyFilter(t_bmp8 * img, float ** kernel, int kernelSize) {
+    //Does a convolution with a matrix created from the data and the filter
     int center = kernelSize/2;
     float** M1 = buildMatrix(img -> data, img -> height, img -> width); // The one used to store the data
     float** M2 = buildMatrix(img -> data, img -> height, img -> width); // The one used for calculations
@@ -151,6 +162,8 @@ void bmp8_applyFilter(t_bmp8 * img, float ** kernel, int kernelSize) {
 }
 
     unsigned int* bmp8_computeHistogram(t_bmp8* img) {
+        /*Computes histogram in order to have a better contrast
+        It returns the array containing the number of occurences of i at the position i*/
         unsigned int* histogram = (unsigned int *)malloc(256 * sizeof(unsigned int));
         for (int i = 0; i < 256; i++) {//initialize all values to 0
             histogram[i] = 0;
@@ -162,7 +175,8 @@ void bmp8_applyFilter(t_bmp8 * img, float ** kernel, int kernelSize) {
     }
 
     unsigned int* bmp8_computeCDF(unsigned int* hist) {
-        unsigned int* cdf = (unsigned int *)malloc(256 * sizeof(unsigned int));
+        //Equalizes the histogram by applying an obscur 
+        unsigned int* cdf = (unsigned int *)malloc(256 * sizeof(unsigned int));//For intermediate calculations
         unsigned int* hist_eq = (unsigned int *)malloc(256 * sizeof(unsigned int));
         int min = 300;cdf[0] = hist[0];
         int sum = hist[0];
@@ -174,7 +188,7 @@ void bmp8_applyFilter(t_bmp8 * img, float ** kernel, int kernelSize) {
             sum += hist[i];
         }
         for (int i = 0; i < 256; i++) {
-            float tmp =  255.0*((float)(cdf[i] - min)/(sum - min));
+            float tmp =  255.0*((float)(cdf[i] - min)/(sum - min));//The obscur formula in question 
             hist_eq[i] = round(tmp);
         }
         free(cdf);
@@ -182,6 +196,7 @@ void bmp8_applyFilter(t_bmp8 * img, float ** kernel, int kernelSize) {
     }
 
     void bmp8_equalize(t_bmp8* img, unsigned int* hist_eq) {
+        //simply applies the equalized histogram if data[i] = a it is replaced by hist_eq[a]
         for (int i = 0; i < img->dataSize; i++) {
             img->data[i] = hist_eq[img->data[i]];
         }
