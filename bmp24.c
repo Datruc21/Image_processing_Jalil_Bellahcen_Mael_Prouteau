@@ -302,7 +302,9 @@ void bmp24_convolution(t_bmp24 * img,float ** kernel, int kernelSize) {
 
 
 void bmp24_equalize(t_bmp24 * img) {
-    //We create a copy of the array of pixels that will store the YUV
+    /*We create a copy of the array of pixels that will store the YUV
+    See bmp8 histo for more details
+    */
     t_yuv_pixel** copy = yuv_allocateDataPixels(img -> width, img -> height);
     //Conversion of the copy in the YUV space
     for (int i = 0; i<img -> height; i++) {
