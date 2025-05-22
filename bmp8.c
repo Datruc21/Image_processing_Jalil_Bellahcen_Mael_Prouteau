@@ -162,7 +162,8 @@ void bmp8_applyFilter(t_bmp8 * img, float ** kernel, int kernelSize) {
 }
 
     unsigned int* bmp8_computeHistogram(t_bmp8* img) {
-        //Computes histogram
+        /*Computes histogram in order to have a better contrast
+        It returns the array containing the number of occurences of i at the position i*/
         unsigned int* histogram = (unsigned int *)malloc(256 * sizeof(unsigned int));
         for (int i = 0; i < 256; i++) {//initialize all values to 0
             histogram[i] = 0;
@@ -174,8 +175,8 @@ void bmp8_applyFilter(t_bmp8 * img, float ** kernel, int kernelSize) {
     }
 
     unsigned int* bmp8_computeCDF(unsigned int* hist) {
-        //Equalizes the histogram
-        unsigned int* cdf = (unsigned int *)malloc(256 * sizeof(unsigned int));
+        //Equalizes the histogram by applying an obscur 
+        unsigned int* cdf = (unsigned int *)malloc(256 * sizeof(unsigned int));//For intermediate calculations
         unsigned int* hist_eq = (unsigned int *)malloc(256 * sizeof(unsigned int));
         int min = 300;cdf[0] = hist[0];
         int sum = hist[0];
@@ -187,7 +188,7 @@ void bmp8_applyFilter(t_bmp8 * img, float ** kernel, int kernelSize) {
             sum += hist[i];
         }
         for (int i = 0; i < 256; i++) {
-            float tmp =  255.0*((float)(cdf[i] - min)/(sum - min));
+            float tmp =  255.0*((float)(cdf[i] - min)/(sum - min));//The obscur formula in question 
             hist_eq[i] = round(tmp);
         }
         free(cdf);
@@ -195,6 +196,7 @@ void bmp8_applyFilter(t_bmp8 * img, float ** kernel, int kernelSize) {
     }
 
     void bmp8_equalize(t_bmp8* img, unsigned int* hist_eq) {
+        //simply applies the equalized histogram if data[i] = a it is replaced by hist_eq[a]
         for (int i = 0; i < img->dataSize; i++) {
             img->data[i] = hist_eq[img->data[i]];
         }
