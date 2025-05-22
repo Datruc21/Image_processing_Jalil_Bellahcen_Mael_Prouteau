@@ -1,1 +1,0 @@
-/usr/bin/cc -g -Wl,--dependency-file=CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/link.d CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/main.c.o CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/bmp8.c.o CMakeFiles/Image_processing_Jalil_Bellahcen_Mael_Prouteau.dir/bmp24.c.o -o Image_processing_Jalil_Bellahcen_Mael_Prouteau  -lm
