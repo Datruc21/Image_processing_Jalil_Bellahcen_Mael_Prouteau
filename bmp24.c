@@ -11,10 +11,10 @@ int limit(int a) {
      Return the closest bound
      */
     if (a > 255) {
-        a = 255;
+        return  255;
     }
     if (a < 0) {
-        a = 0;
+        return 0;
     }
     return a;
 }

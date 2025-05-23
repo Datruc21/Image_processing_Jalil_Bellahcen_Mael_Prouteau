@@ -101,7 +101,8 @@ void save_file(t_bmp8* image8, t_bmp24* image24) {
     int option;
     printf("\t 1. Bmp8 image\n");
     printf("\t 2. Bmp24 image\n");
-    scanf("%d", &option);
+    option = 0;
+    scanf(" %d", &option);
     switch (option) {
         case 1:
             bmp8_saveImage(complete_name, image8);
@@ -110,8 +111,9 @@ void save_file(t_bmp8* image8, t_bmp24* image24) {
         case 2:
             bmp24_saveImage(image24, complete_name);
             bmp24_free(image24);
+            break;
         default:
-            printf("Invalid option passed, try again. \n");
+            printf("Invalid option passed, try again.\n");
             save_file(image8, image24);
             break;
     }
