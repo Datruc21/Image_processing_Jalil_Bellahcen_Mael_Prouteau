@@ -1,5 +1,7 @@
-/*Declaration of all functions and structures related to bmp24 images
-Done by Jalil Bellahcen and Maël*/
+/*
+Declaration of all functions and structures related to bmp24 images
+Done by Jalil Bellahcen and Maël
+*/
 
 #include <stdint.h>
 #include <stdlib.h>

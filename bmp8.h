@@ -1,7 +1,12 @@
+/*
+Declaration of all functions and structures related to bmp8 images (load image, save image, apply filter...)
+Done by Jalil Bellahcen and Maël Prouteau together
+*/
+
 #ifndef BMP8_H
 #define BMP8_H
 
-typedef struct {
+typedef struct { // the type of the image
     unsigned char header[54];
     unsigned char colorTable[1024];
     unsigned char * data;

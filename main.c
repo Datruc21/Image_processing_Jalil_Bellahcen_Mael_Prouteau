@@ -1,9 +1,13 @@
+/*
+Main Program handling the main menu and all its functions (call to load an image...)
+Done by Jalil Bellahcen and Maël Prouteau together
+*/
+
 #include <stdio.h>
 #include "bmp8.h"
 #include <stdlib.h>
 #include "bmp24.h"
 #include "string.h"
-
 
 //definition of the different filters
 

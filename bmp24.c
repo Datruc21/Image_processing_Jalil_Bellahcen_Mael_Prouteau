@@ -1,6 +1,6 @@
 /*
 Module handling bmp24 images (creation, saving, applying filters,etc...)
-    Done by Jalil Bellahcen and Maël Prouteau together
+Done by Jalil Bellahcen and Maël Prouteau together
 */
 
 #include "bmp24.h"

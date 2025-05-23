@@ -1,7 +1,6 @@
 /*
 Module handling bmp8 images (creation, saving, applying filters,etc...)
-    Done by Jalil Bellahcen and Maël Prouteau together
-
+Done by Jalil Bellahcen and Maël Prouteau together
 */
 #include "bmp8.h"
 #include <stdlib.h>
