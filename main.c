@@ -318,7 +318,7 @@ void main_menu(t_bmp8* image8, t_bmp24* image24) {
     printf("\t 2. Save an image\n");
     printf("\t 3. Apply a filter\n");
     printf("\t 4. Display image information\n");
-    printf("\t 5. Histogram\n");
+    printf("\t 5. Equalize\n");
     printf("\t 6. Quit\n");
     scanf("%d", &option);
     switch (option) {

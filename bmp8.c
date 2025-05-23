@@ -78,7 +78,7 @@ void bmp8_free(t_bmp8 * img){
 }
 
 void bmp8_printInfo(t_bmp8 * img){
-    //Print informations related to the image
+    //Print information related to the image
     if (img != NULL) {
         printf("Image info :\n");
         printf("\tWidth:%u\n",img -> width);
@@ -140,7 +140,7 @@ void bmp8_applyFilter(t_bmp8 * img, float ** kernel, int kernelSize) {
             float sum = 0;
             for (int k = -center; k <= center; k++) {
                 for (int l = -center; l <= center; l++) {
-                    sum += M2[i + k][j + l] * kernel[center - k][center - l];  // Accès aux voisins
+                    sum += M2[i + k][j + l] * kernel[center - k][center - l];  // neighbouring pixels
                 }
             }
             if (sum < 0)

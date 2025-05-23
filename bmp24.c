@@ -129,7 +129,7 @@ void bmp24_free(t_bmp24 * img) {
 }
 
 t_bmp24* bmp24_loadImage(const char * filename) {
-    //Creates the image, and stores its informations
+    //Creates the image, and stores its information
     FILE* f;
     f = fopen(filename, "rb");
     if (f == NULL){printf("Error while reading the file!\n");return NULL;}
