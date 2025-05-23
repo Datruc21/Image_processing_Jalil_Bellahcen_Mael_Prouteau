@@ -37,7 +37,13 @@ float Emboss[3][3] = {
     {0,1,2}
 };
 
+
+
 void open_file(t_bmp8** image8, t_bmp24** image24) {
+    /* This function opens a file and store its address in the corresponding variable (either image8 or image24)
+        the user has to precise the path of the location with a .bmp at the end
+        by having both variables, we can work on 2 different images at the same time, they are passed throw the entire program
+     */
   char* file_name = (char* )malloc(256);
   printf("File path :");
   scanf("%s", file_name);
@@ -80,6 +86,10 @@ void open_file(t_bmp8** image8, t_bmp24** image24) {
 }
 
 void save_file(t_bmp8* image8, t_bmp24* image24) {
+    /* This function saves a file stored in one of the two parameters (either image8 or image24)
+        the user has to precise the path of the new location with a .bmp at the end
+        by having both variables, we can work on 2 different images at the same time, they are passed throw the entire program
+     */
     char* file_name = malloc(256);
     printf("File path :");
     scanf(" %s", file_name);
@@ -109,6 +119,9 @@ void save_file(t_bmp8* image8, t_bmp24* image24) {
 }
 
 void choose_filter(t_bmp8* image8, t_bmp24* image24) {
+    /* This function applies a filter to an image stored in one of the two parameters (either image8 or image24)
+        by having both variables, we can work on 2 different images at the same time, they are passed throw the entire program
+     */
     int option;
     printf("\t 1. Bmp8 image\n");
     printf("\t 2. Bmp24 image\n");
@@ -297,6 +310,9 @@ void choose_filter(t_bmp8* image8, t_bmp24* image24) {
 }
 
 void apply_histogram(t_bmp8* image8, t_bmp24* image24) {
+    /* This function applies an equalize filter to an image stored in one of the two parameters (either image8 or image24)
+        by having both variables, we can work on 2 different images at the same time, they are passed throw the entire program
+     */
     int option;
     printf("\t 1. Bmp8 image\n");
     printf("\t 2. Bmp24 image\n");
@@ -316,6 +332,9 @@ void apply_histogram(t_bmp8* image8, t_bmp24* image24) {
 }
 
 void main_menu(t_bmp8* image8, t_bmp24* image24) {
+    /* This function calls the main menu in a recursive way, looping as long as we do not choose quit
+        We have as parameters both images in order to pass them to other functions later
+     */
   int option;
     printf("Please choose an option :\n");
     printf("\t 1. Open an image\n");
@@ -363,6 +382,7 @@ void main_menu(t_bmp8* image8, t_bmp24* image24) {
 }
 
 int main(void) {
+    /* This function is the main game loop*/
     t_bmp8* image8 = NULL;
     t_bmp24* image24 = NULL;
     printf("Welcome the the bmp image processing program that allows you to modify your images !\n");
