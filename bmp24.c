@@ -1,10 +1,10 @@
+/*
+Module handling bmp24 images (creation, saving, applying filters,etc...)
+    Done by Jalil Bellahcen and Maël Prouteau together
+*/
+
 #include "bmp24.h"
 #include "bmp8.h"
-
-/*
-    Module handling bmp24 images (creation, saving, applying filters,etc...)
-    Done by Jalil Bellahcen and Maël Prouteau
-*/
 
 int limit(int a) {
     //This function caps the pixels values in case they exceed the values

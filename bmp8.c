@@ -1,14 +1,13 @@
+/*
+Module handling bmp8 images (creation, saving, applying filters,etc...)
+    Done by Jalil Bellahcen and Maël Prouteau together
+
+*/
 #include "bmp8.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-
-/*
-    Module handling bmp8 images (creation, saving, applying filters,etc...)
-    Done by Jalil Bellahcen and Maël Prouteau
-*/
-
 
 t_bmp8 * bmp8_loadImage(const char* filename) {
     //Creates dynamically a bmp8 image and fills it

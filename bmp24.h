@@ -1,3 +1,6 @@
+/*Declaration of all functions and structures related to bmp24 images
+Done by Jalil Bellahcen and Maël*/
+
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -60,7 +63,7 @@ typedef struct {
     t_pixel** data;
 } t_bmp24;
 
-typedef struct {
+typedef struct { //Used for the contrast
     float Y;
     float U;
     float V;
