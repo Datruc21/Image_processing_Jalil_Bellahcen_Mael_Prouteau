@@ -7,7 +7,9 @@ Done by Jalil Bellahcen and Maël Prouteau together
 #include "bmp8.h"
 
 int limit(int a) {
-    //This function caps the pixels values in case they exceed the values
+    /*This function caps the input pixels values in case they exceed the values
+     Return the closest bound
+     */
     if (a > 255) {
         a = 255;
     }
@@ -18,18 +20,21 @@ int limit(int a) {
 }
 
 void file_rawRead (uint32_t position, void * buffer, uint32_t size, size_t n, FILE * file) {
+    /*Enables to read a file at a set position*/
     fseek(file, position, SEEK_SET);
     fread(buffer, size, n, file);
 }
 
 void file_rawWrite (uint32_t position, void* buffer, uint32_t size, size_t n, FILE * file) {
+    /*Enables to write a file at a set position*/
     fseek(file, position, SEEK_SET);
     fwrite(buffer, size, n, file);
 }
 
 
 void reverse_rows(t_pixel** M, int width, int height) {
-    //Function used to reverse the matrix of pixels after reading and writing
+    /*Function used to reverse the matrix M of size width x height of
+     pixels after reading and writing*/
     t_pixel** A = bmp24_allocateDataPixels(width,height);
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
@@ -44,7 +49,7 @@ void reverse_rows(t_pixel** M, int width, int height) {
 }
 
 t_yuv_pixel** yuv_allocateDataPixels(int width, int height) {
-    //Creates dynamically an array of YUV pixels
+    //Creates dynamically an array of YUV pixels of size width x height
     t_yuv_pixel** matrix = (t_yuv_pixel**)malloc(sizeof(t_yuv_pixel*) * height);
     if (!matrix) {
         printf("Error in allocation for the YUV matrix!\n");
@@ -63,7 +68,6 @@ t_yuv_pixel** yuv_allocateDataPixels(int width, int height) {
             return NULL;
         }
     }
-
     return matrix;
 }
 
@@ -104,7 +108,7 @@ void bmp24_freeDataPixels(t_pixel ** pixels, int height) {
 
 
 t_bmp24* bmp24_allocate(int width, int height, int colorDepth) {
-    //Creates dynamically a bmp24 structure
+    //Creates dynamically a bmp24 structure to store an image
     t_bmp24* image = (t_bmp24*)malloc(sizeof(t_bmp24));
     if (!image) {
         printf("Error in allocation for the image!\n");
@@ -200,7 +204,7 @@ void bmp24_writePixelData(t_bmp24* image, FILE* file) {
 
 
 void bmp24_saveImage(t_bmp24* img, const char* filename) {
-    //Saves the image by writing it
+    //Saves the image by writing it under the name filename
     FILE* f;
     f = fopen(filename, "wb");
     if (f == NULL){printf("Error while reading the file!\n");return;}
@@ -212,7 +216,7 @@ void bmp24_saveImage(t_bmp24* img, const char* filename) {
 
 
 void bmp24_negative (t_bmp24* img) {
-    //Negative filter
+    //Negative filter on the input image
     for (int i = 0; i<img -> height; i++) {
         for (int j = 0; j<img -> width; j++) {
             (img -> data[i][j]).red = 255 - (img -> data[i][j]).red;
@@ -222,7 +226,7 @@ void bmp24_negative (t_bmp24* img) {
     }
 }
 void bmp24_grayscale (t_bmp24* img) {
-    //Grayscale filter
+    //Grayscale filter on the input image
     for (int i = 0; i<img -> height; i++) {
         for (int j = 0; j<img -> width; j++) {
             int avg = ((img -> data[i][j]).blue + (img -> data[i][j]).green + (img -> data[i][j]).red)/3;
@@ -233,7 +237,7 @@ void bmp24_grayscale (t_bmp24* img) {
     }
 }
 void bmp24_brightness (t_bmp24* img, int value) {
-    //Brigthness filer
+    //Brigthness filer on the input image
     for (int i = 0; i<img -> height; i++) {
         for (int j = 0; j<img -> width; j++){
             (img -> data[i][j].red) += value;
@@ -259,7 +263,7 @@ void bmp24_brightness (t_bmp24* img, int value) {
 }
 
 void bmp24_convolution(t_bmp24 * img,float ** kernel, int kernelSize) {
-    //Does a convolution with a filter, same method as bmp8, but 3 times
+    //Does a convolution with a filter (kernel), same method as bmp8, but 3 times
     int center = kernelSize / 2;
     t_pixel** A = bmp24_allocateDataPixels(img -> width, img -> height);
     for (int i = 0; i<img -> height; i++) {
